@@ -1,0 +1,48 @@
+﻿Rishi Kumar, rk793  Kunal Jangam, ksj48
+OVERVIEW:
+We created a server and client system that follows DUMB protocol and allow the user to manage multiple message boxes. 
+
+
+
+
+Client side:
+First we tried commands that do not exist such as ‘yelp’ or ‘nixt’ and made sure they yielded the correct error. Then we checked the proper commands and made sure that they sent their DUMB protocol counterparts to the server. After this, we tested to make sure the client takes in a message from the server in DUMB protocol and translate it back to english.
+
+
+
+
+Single client server:
+HELLO:
+Made sure server sent hello when connection was established with a client.
+GDBYE:
+We ran GDBYE when a box was open to make sure the box is closed during gdbye. We also made sure that the server would stay running and only the client was stopped. We created a box, disconnected, and reconnected to make sure that data is stored in the server properly.
+CREAT:
+We created a valid message box, then tried to create it again to get the ER:EXIST error. We also tried to create boxes that were invalid, such as boxes with names that started with a non alphabetical character and boxes with names less than 5 characters long or over 25 characters long, to get the ER:WHAT? error. We created 3 different boxes, deleted the second, and opened the third to make sure the boxes were stored properly.
+DELBX:
+We did a valid delete, we deleted before we created to get an ER:NEXST error. We also deleted a box that was just deleted to get the same error. We tried to delete an open box to get the ER:OPEND error, and we tried to delete a closed box that still had messages in it to get the ER:NOTMT error. Also, we tried to close boxes with names that would yield ER:WHAT?.
+OPNBX:
+We open a box we just created. We opened a box that we just closed. We tried to open a box that doesn’t exist and a box that was just deleted to get the ER:NEXST error. We also tested box names that did not fit the naming protocol to get ER:WHAT?.
+EXTRA CREDIT: We tried to open a box when we already had a box open to get a ER:OPNEX error(open exists) that we created for that case.
+CLSBX:
+We closed a box that was just opened. We closed a box with messages inside. We tried to close a box that doesn’t exist, a box that was just deleted, and a box that was not open to get the ER:NOOPN error. Also, we tested names of boxes that would give the ER:WHAT? exception.
+PUTMG:
+We implemented a queue for our message box, with each node being a message. We implemented enqueue for PUTMG. We tested adding multiple messages to a message box. We tested adding messages when there was no box open to get the ER:NOOPN error.
+NXTMG:
+We utilized the queue system for our message box and made sure that it would actually dequeue the first node. We tested this by added many messages to the box and saw that they came out the order they went in. We tested ER:EMPTY by calling next on an empty message box. We tested ER:NOOPN by calling next when we had no message box open.
+
+
+Multiple clients server:
+HELLO: 
+We used threads to allow multiple clients to connect. We detached the threads from the main. We made sure multiple clients could connect, and on each connection the server would send HELLO.
+GDBYE: 
+We called quit in one client to see that only that client was disconnected while the server remained active with its other client connections. We opened a box on one client, quit out, then opened the same box on another client to make sure gdbye closed boxes properly.
+CREAT: 
+We created a box on one client, and tried to create the same box on another client to get the ER:EXIST error and make sure that all clients could see boxes made by other clients. 
+DELBX: 
+We created a box on one client and deleted it on another client. We also created two boxes on one client, deleted the first box, and recreated it on the second client to make sure the box data was shared properly across clients.
+OPNBX: 
+We created a box on one client and opened it on the same client. We then tried to open it on another client and obtained the correct error for that case. After, we created a new box on one client and attempted to open it on another to make sure all clients had access to the box data.
+CLSBX:
+EXTRA CREDIT: On each of two different clients, we created and opened a unique box. On one of the clients, we tried to close the box that was opened by the other client to get the ER:OPEND error and to make sure the client could only close a box it had opened. 
+PUTMG/NXTMG:
+We opened a newly created box on one client and put messages into it and closed it. Then on another client, we opened and got the correct next messages from the same box.
